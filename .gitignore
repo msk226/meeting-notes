@@ -1,0 +1,10 @@
+# 개인 용어집과 회의 데이터는 올리지 않는다
+glossary.txt
+*.m4a
+*.mp3
+*.wav
+*.aiff
+*.mp4
+*_원문.txt
+.logs/
+.DS_Store
