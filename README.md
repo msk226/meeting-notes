@@ -2,6 +2,14 @@
 
 회의 녹음 파일을 회의록 마크다운으로 정리하는 CLI이자 AI 에이전트 스킬입니다.
 
+![Shell](https://img.shields.io/badge/Shell-POSIX%20sh-4EAA25?logo=gnubash&logoColor=white)
+![whisper.cpp](https://img.shields.io/badge/STT-whisper.cpp-000000?logo=openai&logoColor=white)
+![ffmpeg](https://img.shields.io/badge/audio-ffmpeg-007808?logo=ffmpeg&logoColor=white)
+![Claude Code](https://img.shields.io/badge/summary-Claude%20Code-D97757?logo=claude&logoColor=white)
+![Ollama](https://img.shields.io/badge/local%20LLM-Ollama-000000?logo=ollama&logoColor=white)
+![Agent Skill](https://img.shields.io/badge/Agent%20Skill-Claude%20·%20Codex%20·%20Gemini-8A2BE2)
+![License](https://img.shields.io/badge/license-MIT-blue)
+
 ```mermaid
 flowchart TD
     A[🎙️ 녹음 파일<br/>m4a · mp3 · wav] --> B
