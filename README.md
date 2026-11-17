@@ -2,8 +2,22 @@
 
 회의 녹음 파일을 회의록 마크다운으로 정리하는 CLI이자 AI 에이전트 스킬입니다.
 
-```
-녹음 파일 → ffmpeg → whisper.cpp (로컬 전사) → 요약 → 회의록.md
+```mermaid
+flowchart TD
+    A[🎙️ 녹음 파일<br/>m4a · mp3 · wav] --> B
+
+    subgraph LOCAL [내 컴퓨터 안에서만]
+        B[ffmpeg<br/>16kHz 모노 WAV 변환] --> C[whisper.cpp<br/>로컬 전사 · -mc 0]
+        C --> D{환각 루프 검사<br/>고유 줄 비율}
+    end
+
+    D -->|정상| E{--transcript-only?}
+    D -->|20% 이하| W[⚠️ 경고 + 로그·원문 백업] --> E
+
+    E -->|예| T[📄 전사 원문.txt<br/>요약은 AI 에이전트가 직접]
+    E -->|아니오| F[용어집 + prompt.md<br/>프롬프트 구성]
+    F --> G[요약기<br/>claude -p · ollama 등]
+    G --> H[📝 회의록.md<br/>요약 · 논의 · 결정 · 액션 아이템]
 ```
 
 - **음성은 내 컴퓨터 밖으로 나가지 않습니다.** 전사는 whisper.cpp로 로컬에서 합니다.
@@ -22,7 +36,16 @@ Claude Code, Codex, Gemini CLI 등에 저장소 주소와 함께 이렇게 말�
 
 > ~/Downloads/주간회의.m4a 회의록 만들어 줘.
 
-에이전트는 [`SKILL.md`](SKILL.md)의 절차를 따릅니다. 설치 점검 → 용어집 → 전사 → 요약 → 결과 확인 순서입니다. 패키지 설치나 모델 다운로드 전에는 사용자에게 먼저 묻도록 되어 있습니다.
+에이전트는 [`SKILL.md`](SKILL.md)의 절차를 따릅니다. 패키지 설치나 모델 다운로드 전에는 사용자에게 먼저 묻도록 되어 있습니다.
+
+```mermaid
+flowchart LR
+    A[설치 점검<br/>--doctor] --> B[용어집 확인]
+    B --> C[전사]
+    C --> D[요약]
+    D --> E[결과 확인]
+    A -.->|없는 의존성| Q[사용자에게 설치 여부 질문]
+```
 
 ### Claude Code 스킬로 설치
 
